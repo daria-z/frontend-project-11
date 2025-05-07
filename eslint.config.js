@@ -3,7 +3,7 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
-    ignores: ["node_modules/**", "dist/**", "__fixtures__/**"],
+    ignores: ["node_modules/**", "dist/**", "src/dist/**", "__fixtures__/**"],
   },
   {
     files: ["**/*.{js,mjs,cjs}"],
