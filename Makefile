@@ -12,3 +12,9 @@ build:
 
 test:
 	echo no tests
+
+qlty-check:
+	qlty check --all
+
+qlty-metrics:
+	qlty metrics
