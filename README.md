@@ -7,4 +7,4 @@
 ## Maintainability
 
 [![Maintainability](https://qlty.sh/badges/c844bad3-843c-45f0-818d-ce89db985001/maintainability.svg)](https://qlty.sh/gh/daria-z/projects/frontend-project-11)
-[![SonarQube Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=frontend-project-11&metric=alert_status)](https://sonarcloud.io/dashboard?id=frontend-project-11)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=daria-z_frontend-project-11&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=daria-z_frontend-project-11)
