@@ -13,9 +13,12 @@ const state = onChange(object, (path, value) => {
 
 const schema = yup
   .string()
-  .url()
-  .required('Обязательное поле')
-  .test('no-duplicate', 'Эта лента уже добавлена', (value) => !state.rssFeed.includes(value));
+  .url("Ссылка должна быть валидным URL")
+  .required("Обязательное поле")
+  .test(
+    "Эта лента уже добавлена",
+    (value) => !state.rssFeed.includes(value)
+  );
 
 const validateInput = (value) => {
   try {
@@ -45,6 +48,9 @@ export const addRssFeed = () => {
   }
 };
 
+export const getErrors = () => {
+  return state.errors;
+};
 
 
 

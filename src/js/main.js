@@ -1,4 +1,5 @@
-import { updateInputValue, addRssFeed } from "./model";
+import { updateInputValue, addRssFeed, getErrors, getRssFeed } from "./model";
+import { renderErrors, removeErrors } from "./view";
 
 const input = document.querySelector("#url-input");
 const form = document.querySelector("#rss-form");
@@ -10,7 +11,12 @@ input.addEventListener('input', (e) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   addRssFeed();
+  renderErrors(getErrors());
 });
+
+
+
+
 
 
 
