@@ -33,26 +33,31 @@ const validateInput = (value) => {
   }
 };
 
-export const updateInputValue = (value) => {
-  state.inputValue = value;
-  state.errors = null;
-};
 
-export const addRssFeed = () => {
-  if (validateInput(state.inputValue)) {
-    state.rssFeed = [...state.rssFeed, state.inputValue];
-    console.log("обновлён список rss", state.rssFeed);
+export const createModel = () => {
+  const updateInputValue = (value) => {
+    state.inputValue = value;
     state.errors = null;
-  } else {
-    console.log("не прошёл валидацию:", state.errors);
+  };
+
+  const addRssFeed = () => {
+    if (validateInput(state.inputValue)) {
+      state.rssFeed = [...state.rssFeed, state.inputValue];
+      console.log("обновлён список rss", state.rssFeed);
+      state.errors = null;
+    } else {
+      console.log("не прошёл валидацию:", state.errors);
+    }
+  };
+
+  const getErrors = () => {
+    return state.errors;
+  };
+
+  return {
+    updateInputValue, addRssFeed, getErrors
   }
-};
-
-export const getErrors = () => {
-  return state.errors;
-};
-
-
+}
 
 
 

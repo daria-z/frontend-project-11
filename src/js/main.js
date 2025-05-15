@@ -1,18 +1,19 @@
-import { updateInputValue, addRssFeed, getErrors, getRssFeed } from "./model";
-import { renderErrors, removeErrors } from "./view";
+import { createModel } from "./model";
+import { createView } from "./view";
 
-const input = document.querySelector("#url-input");
-const form = document.querySelector("#rss-form");
+const model = createModel();
+const view = createView();
 
-input.addEventListener('input', (e) => {
-  updateInputValue(e.target.value);
+view.bindInputChange((value) => {
+  model.updateInputValue(value);
+  const errors = model.getErrors();
+  view.renderErrors(errors);
 });
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  addRssFeed();
-  renderErrors(getErrors());
+view.bindAddFeed((value) => {
+  model.addRssFeed(value);
 });
+
 
 
 
