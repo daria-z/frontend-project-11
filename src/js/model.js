@@ -1,5 +1,6 @@
 import onChange from "on-change";
 import * as yup from "yup";
+import i18next from "../i18n.js";
 
 import { renderErrors, renderInputValue } from "./view.js";
 
@@ -24,12 +25,12 @@ const state = onChange(object, (path, value) => {
 
 const schema = yup
   .string()
-  .url()
-  .required("Обязательное поле")
+  .url(i18next.t("invalid_url"))
+  .required(i18next.t("required_field"))
   .test(
     "no-duplicate",
-    "Эта лента уже добавлена",
-    (value) => !state.rssFeed.includes(value),
+    i18next.t("no_duplicate"),
+    (value) => !state.rssFeed.includes(value)
   );
 
 export const validateInput = () => {
