@@ -1,12 +1,12 @@
 import onChange from "on-change";
-import * as yup from 'yup';
+import * as yup from "yup";
 
-import { renderErrors, renderInputValue } from './view.js';
+import { renderErrors, renderInputValue } from "./view.js";
 
 const object = {
-  inputValue: '',
+  inputValue: "",
   rssFeed: [],
-  errors: null
+  errors: null,
 };
 
 const state = onChange(object, (path, value) => {
@@ -25,11 +25,16 @@ const state = onChange(object, (path, value) => {
 const schema = yup
   .string()
   .url()
-  .required('Обязательное поле')
-  .test('no-duplicate', 'Эта лента уже добавлена', (value) => !state.rssFeed.includes(value));
+  .required("Обязательное поле")
+  .test(
+    "no-duplicate",
+    "Эта лента уже добавлена",
+    (value) => !state.rssFeed.includes(value),
+  );
 
 export const validateInput = () => {
-  return schema.validate(state.inputValue, { abortEarly: false })
+  return schema
+    .validate(state.inputValue, { abortEarly: false })
     .then(() => {
       state.errors = null;
     })
@@ -50,21 +55,3 @@ export const addRssFeed = () => {
   state.rssFeed = [...state.rssFeed, state.inputValue];
   console.log("обновлён список rss", state.rssFeed);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

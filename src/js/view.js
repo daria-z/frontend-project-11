@@ -1,5 +1,5 @@
-const input = document.querySelector('#url-input');
-const feedback = document.querySelector('.feedback');
+const input = document.querySelector("#url-input");
+const feedback = document.querySelector(".feedback");
 
 export const renderErrors = (errors) => {
   if (errors && errors.length > 0) {
