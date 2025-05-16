@@ -6,13 +6,14 @@ export const createView = () => {
   const bindInputChange = (handler) => {
     input.addEventListener('input', (e) => {
       handler(e.target.value);
+      console.log('input changes');
     })
   };
 
   const bindAddFeed = (handler) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      handler()
+      handler();
     })
   };
 
@@ -39,9 +40,3 @@ export const createView = () => {
     renderErrors
   }
 };
-
-
-
-
-
-

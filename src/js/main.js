@@ -6,21 +6,17 @@ const view = createView();
 
 view.bindInputChange((value) => {
   model.updateInputValue(value);
-  const errors = model.getErrors();
-  view.renderErrors(errors);
+  view.renderErrors(null);
 });
 
-view.bindAddFeed((value) => {
-  model.addRssFeed(value);
+view.bindAddFeed(() => {
+  model.validateInput()
+    .then((value) => {
+      model.addRssFeed(value);
+      view.renderErrors(null);
+      model.updateInputValue("");
+    })
+    .catch(() => {
+      view.renderErrors(model.getErrors());
+    });
 });
-
-
-
-
-
-
-
-
-
-
-

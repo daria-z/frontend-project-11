@@ -16,38 +16,36 @@ const schema = yup
   .url("Ссылка должна быть валидным URL")
   .required("Обязательное поле")
   .test(
+    "no-duplicate",
     "Эта лента уже добавлена",
     (value) => !state.rssFeed.includes(value)
   );
 
-const validateInput = (value) => {
-  try {
-    schema.validateSync(value, { abortEarly: false });
-    return true;
-  } catch (error) {
-    if (error instanceof yup.ValidationError) {
-      state.errors = error.errors;
-      return false;
-    }
-    throw error;
-  }
-};
-
 
 export const createModel = () => {
+  const validateInput = (value) => {
+    return schema
+      .validate(value)
+      .then((validatedValue) => {
+        state.errors = null;
+        return validatedValue;
+      })
+      .catch((error) => {
+        if (error instanceof yup.ValidationError) {
+          state.errors = error.errors;
+        }
+        throw error;
+      });
+  };
+
   const updateInputValue = (value) => {
     state.inputValue = value;
     state.errors = null;
   };
 
   const addRssFeed = () => {
-    if (validateInput(state.inputValue)) {
-      state.rssFeed = [...state.rssFeed, state.inputValue];
-      console.log("обновлён список rss", state.rssFeed);
-      state.errors = null;
-    } else {
-      console.log("не прошёл валидацию:", state.errors);
-    }
+    state.rssFeed = [...state.rssFeed, state.inputValue];
+    state.errors = null;
   };
 
   const getErrors = () => {
@@ -55,13 +53,6 @@ export const createModel = () => {
   };
 
   return {
-    updateInputValue, addRssFeed, getErrors
-  }
-}
-
-
-
-
-
-
-
+    updateInputValue, validateInput, addRssFeed, getErrors
+  };
+};
