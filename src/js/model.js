@@ -1,6 +1,8 @@
 import onChange from "on-change";
 import * as yup from 'yup';
 
+import { renderErrors, renderInputValue } from './view.js';
+
 const object = {
   inputValue: '',
   rssFeed: [],
@@ -9,6 +11,15 @@ const object = {
 
 const state = onChange(object, (path, value) => {
   console.log(`состояние изменено: ${path}`, value);
+  if (path === "rssFeed") {
+    console.log("rss feed:", value);
+  }
+  if (path === "inputValue") {
+    renderInputValue(value);
+  }
+  if (path === "errors") {
+    renderErrors(value);
+  }
 });
 
 const schema = yup
@@ -17,17 +28,17 @@ const schema = yup
   .required('Обязательное поле')
   .test('no-duplicate', 'Эта лента уже добавлена', (value) => !state.rssFeed.includes(value));
 
-const validateInput = (value) => {
-  try {
-    schema.validateSync(value, { abortEarly: false });
-    return true;
-  } catch (error) {
-    if (error instanceof yup.ValidationError) {
-      state.errors = error.errors;
-      return false;
-    }
-    throw error;
-  }
+export const validateInput = () => {
+  return schema.validate(state.inputValue, { abortEarly: false })
+    .then(() => {
+      state.errors = null;
+    })
+    .catch((error) => {
+      if (error instanceof yup.ValidationError) {
+        state.errors = error.errors;
+      }
+      throw error;
+    });
 };
 
 export const updateInputValue = (value) => {
@@ -36,14 +47,17 @@ export const updateInputValue = (value) => {
 };
 
 export const addRssFeed = () => {
-  if (validateInput(state.inputValue)) {
-    state.rssFeed = [...state.rssFeed, state.inputValue];
-    console.log("обновлён список rss", state.rssFeed);
-    state.errors = null;
-  } else {
-    console.log("не прошёл валидацию:", state.errors);
-  }
+  state.rssFeed = [...state.rssFeed, state.inputValue];
+  console.log("обновлён список rss", state.rssFeed);
 };
+
+
+
+
+
+
+
+
 
 
 

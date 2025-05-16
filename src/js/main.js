@@ -1,4 +1,4 @@
-import { updateInputValue, addRssFeed } from "./model";
+import { updateInputValue, addRssFeed, validateInput } from "./model";
 
 const input = document.querySelector("#url-input");
 const form = document.querySelector("#rss-form");
@@ -9,7 +9,11 @@ input.addEventListener('input', (e) => {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  addRssFeed();
+  validateInput()
+    .then(() => {
+      addRssFeed();
+    })
+    .catch(() => console.log('валидация не пройдена'));
 });
 
 
