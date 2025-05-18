@@ -30,7 +30,7 @@ const schema = yup
   .test(
     "no-duplicate",
     i18next.t("no_duplicate"),
-    (value) => !state.rssFeed.includes(value)
+    (value) => !state.rssFeed.includes(value),
   );
 
 export const validateInput = () => {

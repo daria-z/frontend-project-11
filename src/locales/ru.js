@@ -5,7 +5,7 @@ export default {
     form_placeholder: "Ссылка RSS",
     add_btn: "Добавить",
     full_btn: "Читать полностью",
-    close: "Закрыть",
+    close_btn: "Закрыть",
     example: "Пример",
     invalid_url: "Ссылка должна быть валидным URL",
     required_field: "Обязательное поле",
