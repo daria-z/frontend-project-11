@@ -7,13 +7,13 @@ const addBtn = document.querySelector("#add-feed-btn");
 const example = document.querySelector("#example");
 const feedback = document.querySelector("#feedback");
 const fullBtn = document.querySelector("#btn-full");
-const closeBtn = document.querySelector("btn-close");
+const closeBtn = document.querySelector("#btn-close");
 
 export const renderUIText = () => {
   title.textContent = i18next.t("title");
   subtitle.textContent = i18next.t("subtitle");
   input.placeholder = i18next.t("form_placeholder");
-  label.textContent = i18next.t("");
+  label.textContent = i18next.t("form_placeholder");
   addBtn.textContent = i18next.t("add_btn");
   fullBtn.textContent = i18next.t("full_btn");
   closeBtn.textContent = i18next.t("close_btn");

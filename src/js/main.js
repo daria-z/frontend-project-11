@@ -1,9 +1,7 @@
 import { updateInputValue, addRssFeed, validateInput } from "./model";
 import { renderUIText } from "./view.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderUIText();
-});
+renderUIText();
 
 const input = document.querySelector("#url-input");
 const form = document.querySelector("#rss-form");
