@@ -2,26 +2,9 @@ import onChange from "on-change";
 import * as yup from "yup";
 import i18next from "../i18n.js";
 
-import { renderErrors, renderInputValue } from "./view.js";
+import createState from './state.js';
 
-const object = {
-  inputValue: "",
-  rssFeed: [],
-  errors: null,
-};
-
-const state = onChange(object, (path, value) => {
-  console.log(`состояние изменено: ${path}`, value);
-  if (path === "rssFeed") {
-    console.log("rss feed:", value);
-  }
-  if (path === "inputValue") {
-    renderInputValue(value);
-  }
-  if (path === "errors") {
-    renderErrors(value);
-  }
-});
+const state = createState();
 
 const schema = yup
   .string()
