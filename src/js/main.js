@@ -1,4 +1,9 @@
-import { updateInputValue, addRssFeed, validateInput } from "./model";
+import {
+  updateInputValue,
+  addRssFeed,
+  validateInput,
+  fetchRssData,
+} from "./model";
 import { renderUIText } from "./view.js";
 
 renderUIText();
@@ -13,8 +18,6 @@ input.addEventListener("input", (e) => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   validateInput()
-    .then(() => {
-      addRssFeed();
-    })
+    .then(() => addRssFeed()).then(() => fetchRssData())
     .catch(() => console.log("валидация не пройдена"));
 });
