@@ -1,7 +1,6 @@
-import onChange from "on-change";
 import * as yup from "yup";
 import i18next from "../i18n.js";
-import axios from "axios";
+import { fetchRssData } from "./fetchRssData.js";
 
 import createState from './state.js';
 
@@ -36,19 +35,9 @@ export const updateInputValue = (value) => {
   state.errors = null;
 };
 
-export const fetchRssData = () => {
-  axios
-    .get(
-      `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(state.inputValue)}`,
-      {
-        timeout: 5000,
-      }
-    )
-    .then((response) => console.log(response.data))
-    .catch((error) => console.error("fetching error:", error));
-}
 
 export const addRssFeed = () => {
   state.rssFeed = [...state.rssFeed, state.inputValue];
+  fetchRssData(state);
   console.log("обновлён список rss", state.rssFeed);
 };
