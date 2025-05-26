@@ -1,6 +1,7 @@
 import * as yup from "yup";
 import i18next from "../i18n.js";
 import { fetchRssData } from "./fetchRssData.js";
+import { renderRssFeed } from "./renderRssFeed.js";
 
 import createState from './state.js';
 
@@ -40,4 +41,5 @@ export const addRssFeed = () => {
   state.rssFeed = [...state.rssFeed, state.inputValue];
   fetchRssData(state);
   console.log("обновлён список rss", state.rssFeed);
+  renderRssFeed();
 };
