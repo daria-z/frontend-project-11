@@ -1,7 +1,8 @@
 import * as yup from "yup";
 import i18next from "../i18n.js";
 import { fetchRssData } from "./fetchRssData.js";
-import { renderRssFeed } from "./renderRssFeed.js";
+import { parseRss } from "./parseRss.js";
+// import { renderRssFeed } from "./renderRssFeed.js";
 
 import createState from './state.js';
 
@@ -14,32 +15,39 @@ const schema = yup
   .test(
     "no-duplicate",
     i18next.t("no_duplicate"),
-    (value) => !state.rssFeed.includes(value),
+    (value) => !state.feeds.some((feed) => feed.link === value)
   );
 
 export const validateInput = () => {
   return schema
-    .validate(state.inputValue, { abortEarly: false })
+    .validate(state.form.inputValue, { abortEarly: false })
     .then(() => {
-      state.errors = null;
+      state.form.errors = null;
+      return state.form.inputValue;
     })
     .catch((error) => {
       if (error instanceof yup.ValidationError) {
-        state.errors = error.errors;
+        state.form.errors = error.errors;
       }
       throw error;
     });
 };
 
 export const updateInputValue = (value) => {
-  state.inputValue = value;
-  state.errors = null;
+  state.form.inputValue = value;
+  state.form.errors = null;
 };
 
-
 export const addRssFeed = () => {
-  state.rssFeed = [...state.rssFeed, state.inputValue];
-  fetchRssData(state);
-  console.log("обновлён список rss", state.rssFeed);
-  renderRssFeed();
+  fetchRssData(state)
+    .then((xmlString) => parseRss(xmlString))
+    .then(({ channel, items }) => {
+      state.feeds = [...state.feeds, channel];
+      state.posts = [...state.posts, ...items];
+      state.form.inputValue = "";
+      console.log("обновлён список rss", state.feeds);
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
