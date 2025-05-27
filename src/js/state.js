@@ -1,52 +1,31 @@
 import onChange from "on-change";
+import { renderRssFeed } from "./renderRssFeed.js";
 import { renderErrors, renderInputValue } from "./view.js";
 
 const createState = () => {
   const object = {
     form: {
       inputValue: "",
-      errors: ""
+      errors: null,
     },
-    feed: {
-      channel: {
-        title: "",
-        description: "",
-        link: "",
-      },
-      items: [],
-      activeItem: null,
-    },
-    ui: "",
+    feeds: [],
+    posts: [],
+    activeItem: null,
   };
 
-  // items: [
-  //   {
-  //     id: "1",
-  //     title: "Post 1",
-  //     description: "Description 1",
-  //     link: "https://example.com/post1",
-  //   },
-  //   {
-  //     id: "2",
-  //     title: "Post 2",
-  //     description: "Description 2",
-  //     link: "https://example.com/post2",
-  //   },
-  // ],
-
   const state = onChange(object, (path, value) => {
-    console.log(`состояние изменено: ${path}`, value);
-    if (path === "feed") {
-      console.log("rss feed:", value);
+    // console.log(`состояние изменено: ${path}`, value);
+    if (path === "feeds" || path === "posts") {
+      renderRssFeed(state);
     }
     if (path === "activeItem") {
       // поиск по массиву постов
       // рендер модалки
     }
-    if (path === "inputValue") {
+    if (path === "form.inputValue") {
       renderInputValue(value);
     }
-    if (path === "errors") {
+    if (path === "form.errors") {
       renderErrors(value);
     }
   });
@@ -55,3 +34,4 @@ const createState = () => {
 };
 
 export default createState;
+
