@@ -16,7 +16,7 @@ export const parseRss = (xmlString) => {
   };
 
   const items = Array.from(doc.querySelectorAll("item")).map((item) => ({
-    id: 2, //добавить
+    id: item.querySelector("guid")?.textContent || "",
     title: item.querySelector("title")?.textContent || "",
     description: item.querySelector("description")?.textContent || "",
     link: item.querySelector("link")?.textContent || "",
