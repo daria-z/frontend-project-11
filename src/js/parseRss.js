@@ -8,7 +8,7 @@ export const parseRss = (xmlString) => {
   }
 
   const channel = {
-    id: 1, // добавить
+    id: doc.querySelector("channel > link")?.textContent || "",
     title: doc.querySelector("channel > title")?.textContent || "",
     description: doc.querySelector("channel > description")?.textContent || "",
     link: doc.querySelector("channel > link")?.textContent || "",

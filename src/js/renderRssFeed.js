@@ -33,9 +33,9 @@ export const renderRssFeed = (state) => {
             (post) => `
           <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-end-0">
             <a href="${post.link}" class="fw-bold" data-id="${post.id}" target="_blank" rel="noopener noreferrer">${post.title}</a>
-            <button type="button" class="btn btn-outline-primary btn-sm" data-id="${post.id}" data-bs-toggle="modal" data-bs-target="#modal">Просмотр</button>
+            <button type="button" class="btn btn-outline-primary btn-sm modal-btn" data-id="${post.id}" data-bs-toggle="modal" data-bs-target="#modal">Просмотр</button>
           </li>
-        `
+        `,
           )
           .join("")}
       </ul>

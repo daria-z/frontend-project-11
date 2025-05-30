@@ -1,6 +1,6 @@
 import onChange from "on-change";
 import { renderRssFeed } from "./renderRssFeed.js";
-import { renderErrors, renderInputValue } from "./view.js";
+import { renderErrors, renderInputValue, showModal } from "./view.js";
 
 const createState = () => {
   const object = {
@@ -19,8 +19,7 @@ const createState = () => {
       renderRssFeed(state);
     }
     if (path === "activeItem") {
-      // поиск по массиву постов
-      // рендер модалки
+      showModal(state.activeItem);
     }
     if (path === "form.inputValue") {
       renderInputValue(value);

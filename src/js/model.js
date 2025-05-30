@@ -51,3 +51,8 @@ export const addRssFeed = () => {
       throw error;
     });
 };
+
+export const setActivePost = (id) => {
+  console.log(state.posts);
+  state.activeItem = state.posts.find((post) => post.id === id);
+};

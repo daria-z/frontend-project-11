@@ -33,3 +33,7 @@ export const renderErrors = (errors) => {
 export const renderInputValue = (value) => {
   input.value = value;
 };
+
+export const showModal = (activeItem) => {
+  console.log("Активный пост:", activeItem);
+};
