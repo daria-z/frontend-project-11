@@ -39,7 +39,7 @@ export const updateInputValue = (value) => {
 };
 
 export const addRssFeed = () => {
-  fetchRssData(state)
+  fetchRssData(state.form.inputValue)
     .then((xmlString) => parseRss(xmlString))
     .then(({ channel, items }) => {
       state.feeds = [...state.feeds, channel];
@@ -50,6 +50,20 @@ export const addRssFeed = () => {
     .catch((error) => {
       throw error;
     });
+};
+
+export const checkRssFeed = () => {
+  state.feeds.forEach((feed) => {
+    console.log("Проверка фида:", feed.link);
+    fetchRssData(feed.link)
+      .then((xmlString) => parseRss(xmlString))
+      .then(({ channel, items }) => {
+        console.log("в ленте", channel, ":", items);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 };
 
 export const setActivePost = (id) => {

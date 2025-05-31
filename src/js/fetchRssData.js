@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const fetchRssData = (state) => {
-  const proxyUrl = `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(state.form.inputValue)}`;
+export const fetchRssData = (link) => {
+  const proxyUrl = `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(link)}`;
 
   return axios
     .get(proxyUrl, { timeout: 10000 })

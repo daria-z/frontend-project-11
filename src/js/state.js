@@ -1,6 +1,7 @@
 import onChange from "on-change";
 import { renderRssFeed } from "./renderRssFeed.js";
 import { renderErrors, renderInputValue, showModal } from "./view.js";
+import { checkRssFeed } from "./model.js";
 
 const createState = () => {
   const object = {
@@ -14,7 +15,10 @@ const createState = () => {
   };
 
   const state = onChange(object, (path, value) => {
-    // console.log(`состояние изменено: ${path}`, value);
+    console.log(`состояние изменено: ${path}`, value);
+    if (path === "feeds") {
+      checkRssFeed();
+    }
     if (path === "feeds" || path === "posts") {
       renderRssFeed(state);
     }
