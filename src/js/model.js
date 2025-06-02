@@ -34,16 +34,23 @@ export const validateInput = () => {
 };
 
 export const updateInputValue = (value) => {
+  if (value === null) return;
   state.form.inputValue = value;
-  state.form.errors = null;
+  if (state.form.errors) state.form.errors = null;
 };
 
 export const addRssFeed = () => {
-  fetchRssData(state.form.inputValue)
+  return fetchRssData(state.form.inputValue)
     .then((xmlString) => parseRss(xmlString))
     .then(({ channel, items }) => {
+      if (state.feeds.some((feed) => feed.link === channel.link)) {
+        state.form.errors = i18next.t("no_duplicate");
+        return;
+      }
+      const existingIds = new Set(state.posts.map((post) => post.id));
+      const newItems = items.filter((item) => !existingIds.has(item.id));
       state.feeds = [...state.feeds, channel];
-      state.posts = [...state.posts, ...items];
+      state.posts = [...state.posts, ...newItems];
       state.form.inputValue = "";
       console.log("обновлён список rss", state.feeds);
     })
