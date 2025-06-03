@@ -67,18 +67,37 @@ export const addRssFeed = () => {
     });
 };
 
+export const feedsChecking = () => {
+  if (state.feeds.length === 0) {
+    console.log('нет фидов для проверки');
+    return;
+  }
+  checkRssFeed()
+    .then(() => {
+      console.log('проверка фидов завершена');
+      setTimeout(feedsChecking, 10000);
+    })
+    .catch((error) => {
+    console.error('ошибка провеки фида', error);
+    // state.form.errors
+    setTimeout(feedsChecking, 10000);
+  })
+};
+
 export const checkRssFeed = () => {
-  state.feeds.forEach((feed) => {
-    console.log("Проверка фида:", feed.link);
-    fetchRssData(feed.link)
-      .then((xmlString) => parseRss(xmlString))
-      .then(({ channel, items }) => {
-        console.log("в ленте", channel, ":", items);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  });
+  // state.feeds.forEach((feed) => {
+  //   console.log("Проверка фида:", feed.link);
+  //   fetchRssData(feed.link)
+  //     .then((xmlString) => parseRss(xmlString))
+  //     .then(({ channel, items }) => {
+  //       console.log("в ленте", channel, ":", items);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // });
+
+  console.log('checkRssFeed')
 };
 
 export const setActivePost = (id) => {

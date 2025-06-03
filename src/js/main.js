@@ -4,17 +4,17 @@ import {
   addRssFeed,
   validateInput,
   setActivePost,
-  checkRssFeed,
+  // checkRssFeed,
+  feedsChecking,
 } from "./model.js";
 
 export const initApp = () => {
   renderUIText();
+  feedsChecking();
 
   const input = document.querySelector("#url-input");
   const form = document.querySelector("#rss-form");
   const postsContainer = document.querySelector(".posts");
-
-  setInterval(checkRssFeed, 5000);
 
   input.addEventListener("input", (e) => {
     updateInputValue(e.target.value);
