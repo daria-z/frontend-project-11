@@ -39,10 +39,14 @@ export const updateInputValue = (value) => {
   if (state.form.errors) state.form.errors = null;
 };
 
-export const addRssFeed = () => {
-  return fetchRssData(state.form.inputValue)
-    .then((xmlString) => parseRss(xmlString))
-    .then(({ channel, items }) => {
+const fetchAndParseFeed = (url) => {
+  return fetchRssData(url).then((xmlString) => parseRss(xmlString)).catch((error) => {
+    console.error("fetchAndParseRss:", error);
+    throw error;
+  })
+};
+
+const updateFeedsAndPostsState = ({ channel, items}) => {
       if (state.feeds.some((feed) => feed.link === channel.link)) {
         state.form.errors = i18next.t("no_duplicate");
         return;
@@ -53,7 +57,11 @@ export const addRssFeed = () => {
       state.posts = [...state.posts, ...newItems];
       state.form.inputValue = "";
       console.log("обновлён список rss", state.feeds);
-    })
+};
+
+export const addRssFeed = () => {
+  return fetchAndParseFeed(state.form.inputValue)
+    .then(({ channel, items }) => updateFeedsAndPostsState({ channel, items }))
     .catch((error) => {
       throw error;
     });
