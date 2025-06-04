@@ -4,7 +4,7 @@ export const fetchRssData = (link) => {
   const proxyUrl = `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(link)}`;
 
   return axios
-    .get(proxyUrl, { timeout: 10000 })
+    .get(proxyUrl)
     .then((response) => {
       return response.data;
     })

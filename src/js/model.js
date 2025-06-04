@@ -40,67 +40,75 @@ export const updateInputValue = (value) => {
 };
 
 const fetchAndParseFeed = (url) => {
-  return fetchRssData(url).then((xmlString) => parseRss(xmlString)).catch((error) => {
-    console.error("fetchAndParseRss:", error);
-    throw error;
-  })
+  return fetchRssData(url)
+    .then((xmlString) => {
+      // console.log("Полученные данные:", xmlString);
+      return parseRss(xmlString);
+    })
+    .catch((error) => {
+      throw error;
+    })
 };
 
-const updateFeedsAndPostsState = ({ channel, items}) => {
-      if (state.feeds.some((feed) => feed.link === channel.link)) {
-        state.form.errors = i18next.t("no_duplicate");
-        return;
-      }
-      const existingIds = new Set(state.posts.map((post) => post.id));
-      const newItems = items.filter((item) => !existingIds.has(item.id));
-      state.feeds = [...state.feeds, channel];
-      state.posts = [...state.posts, ...newItems];
-      state.form.inputValue = "";
-      console.log("обновлён список rss", state.feeds);
+const addNewPosts = (items) => {
+  const existingIds = new Set(state.posts.map((post) => post.id));
+  const newPosts = items
+    .filter((item) => !existingIds.has(item.id));
+  state.posts = [...state.posts, ...newPosts];
+};
+
+const updateFeedsAndPostsState = ({ channel, items }) => {
+  state.feeds = [...state.feeds, channel];
+  addNewPosts(items);
+  state.form.inputValue = "";
 };
 
 export const addRssFeed = () => {
   return fetchAndParseFeed(state.form.inputValue)
-    .then(({ channel, items }) => updateFeedsAndPostsState({ channel, items }))
+    .then(({ channel, items }) => {
+      updateFeedsAndPostsState({ channel, items });
+      // return { channel, items };
+    })
     .catch((error) => {
+      console.error("Ошибка в addRssFeed:", error.message);
       throw error;
     });
 };
 
 export const feedsChecking = () => {
   if (state.feeds.length === 0) {
-    console.log('нет фидов для проверки');
+    // setTimeout(feedsChecking, 10000);
     return;
   }
   checkRssFeed()
     .then(() => {
-      console.log('проверка фидов завершена');
       setTimeout(feedsChecking, 10000);
     })
     .catch((error) => {
-    console.error('ошибка провеки фида', error);
-    // state.form.errors
-    setTimeout(feedsChecking, 10000);
-  })
+      console.error(error.message);
+      setTimeout(feedsChecking, 10000);
+    });
 };
 
 export const checkRssFeed = () => {
-  // state.feeds.forEach((feed) => {
-  //   console.log("Проверка фида:", feed.link);
-  //   fetchRssData(feed.link)
-  //     .then((xmlString) => parseRss(xmlString))
-  //     .then(({ channel, items }) => {
-  //       console.log("в ленте", channel, ":", items);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // });
+  const promises = state.feeds.map((feed) => {
+    return fetchAndParseFeed(feed.link)
+      .then(({ items }) => {
+        return items;
+      })
+      .catch((error) => {
+        console.error("Ошибка проверки фида:", feed.link, error.message);
+        return [];
+      });
+  });
 
-  console.log('checkRssFeed')
+  return Promise.all(promises).then((results) => {
+    const newPosts = results.flat();
+    addNewPosts(newPosts);
+  });
 };
 
 export const setActivePost = (id) => {
-  console.log(state.posts);
   state.activeItem = state.posts.find((post) => post.id === id);
+  console.log(state.activeItem);
 };

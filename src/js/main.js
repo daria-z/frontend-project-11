@@ -24,12 +24,13 @@ export const initApp = () => {
     e.preventDefault();
     validateInput()
       .then(() => addRssFeed())
-      .catch(() => console.log("валидация не пройдена"));
+      .catch((error) => {
+        console.log("валидация не пройдена:", error.message);
+      });
   });
 
   postsContainer.addEventListener("click", (e) => {
     const button = e.target.closest(".modal-btn");
-    console.log("id:", button.dataset.id);
     if (button && button.dataset.id) {
       setActivePost(button.dataset.id);
     }
