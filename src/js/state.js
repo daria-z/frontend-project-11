@@ -1,5 +1,5 @@
 import onChange from "on-change";
-import { renderRssFeed } from "./renderRssFeed.js";
+import { renderFeeds, renderPosts } from "./renderRssFeed.js";
 import { renderErrors, renderInputValue, showModal } from "./view.js";
 import { feedsChecking } from "./model.js";
 
@@ -17,10 +17,11 @@ const createState = () => {
   const state = onChange(object, (path, value) => {
     console.log(`состояние изменено: ${path}`, value);
     if (path === "feeds") {
+      renderFeeds(state.feeds);
       feedsChecking();
     }
-    if (path === "feeds" || path === "posts") {
-      renderRssFeed(state);
+    if (path === "posts") {
+      renderPosts(state.posts);
     }
     if (path === "activeItem") {
       showModal(state.activeItem);
@@ -37,4 +38,6 @@ const createState = () => {
 };
 
 export default createState;
+
+
 
