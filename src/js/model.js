@@ -115,3 +115,7 @@ export const setActivePost = (id) => {
   };
   state.activeItem = state.posts.find((post) => post.id === id);
 };
+
+export const markPostAsRead = (id) => {
+  state.viewedPostsIds = [...state.viewedPostsIds, id];
+};

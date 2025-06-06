@@ -2,7 +2,7 @@ import onChange from "on-change";
 import { renderFeeds, renderPosts } from "./renderRssFeed.js";
 import { closeModal, showModal } from "./renderModal.js";
 import { renderErrors, renderInputValue } from "./view.js";
-import { feedsChecking } from "./model.js";
+import { feedsChecking, markPostAsRead  } from "./model.js";
 
 const createState = () => {
   const object = {
@@ -13,6 +13,7 @@ const createState = () => {
     feeds: [],
     posts: [],
     activeItem: null,
+    viewedPostsIds: [],
   };
 
   const state = onChange(object, (path, value) => {
@@ -25,7 +26,13 @@ const createState = () => {
       renderPosts(state.posts);
     }
     if (path === "activeItem") {
-      (state.activeItem !== null) ? showModal(state.activeItem) : closeModal();
+      if (state.activeItem !== null) {
+        showModal(state.activeItem);
+        markPostAsRead(state.activeItem.id); //проверять на уникальность!
+        // менять стиль по button.dataset.id?
+      } else {
+        closeModal();
+      }
     }
     if (path === "form.inputValue") {
       renderInputValue(value);
@@ -39,6 +46,7 @@ const createState = () => {
 };
 
 export default createState;
+
 
 
 
