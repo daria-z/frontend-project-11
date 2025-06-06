@@ -1,6 +1,7 @@
 import onChange from "on-change";
 import { renderFeeds, renderPosts } from "./renderRssFeed.js";
-import { renderErrors, renderInputValue, showModal } from "./view.js";
+import { closeModal, showModal } from "./renderModal.js";
+import { renderErrors, renderInputValue } from "./view.js";
 import { feedsChecking } from "./model.js";
 
 const createState = () => {
@@ -24,7 +25,7 @@ const createState = () => {
       renderPosts(state.posts);
     }
     if (path === "activeItem") {
-      showModal(state.activeItem);
+      (state.activeItem !== null) ? showModal(state.activeItem) : closeModal();
     }
     if (path === "form.inputValue") {
       renderInputValue(value);
@@ -38,6 +39,7 @@ const createState = () => {
 };
 
 export default createState;
+
 
 
 

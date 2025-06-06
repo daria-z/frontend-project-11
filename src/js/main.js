@@ -4,7 +4,6 @@ import {
   addRssFeed,
   validateInput,
   setActivePost,
-  // checkRssFeed,
   feedsChecking,
 } from "./model.js";
 
@@ -15,6 +14,7 @@ export const initApp = () => {
   const input = document.querySelector("#url-input");
   const form = document.querySelector("#rss-form");
   const postsContainer = document.querySelector(".posts");
+  const closeModalBtns = document.querySelectorAll('[data-bs-dismiss="modal"]');
 
   input.addEventListener("input", (e) => {
     updateInputValue(e.target.value);
@@ -35,6 +35,10 @@ export const initApp = () => {
       setActivePost(button.dataset.id);
     }
   });
+
+  closeModalBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setActivePost(null);
+    });
+  });
 };
-
-

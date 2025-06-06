@@ -109,6 +109,9 @@ export const checkRssFeed = () => {
 };
 
 export const setActivePost = (id) => {
+  if (id === null) {
+    state.activeItem = null;
+    return;
+  };
   state.activeItem = state.posts.find((post) => post.id === id);
-  console.log(state.activeItem);
 };
