@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const fetchRssData = (link) => {
-  const proxyUrl = `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(link)}`;
+  const proxyUrl = `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(link)}&disableCache=true`;
 
   return axios
     .get(proxyUrl)
