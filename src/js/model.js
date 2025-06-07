@@ -15,7 +15,7 @@ const schema = yup
   .test(
     "no-duplicate",
     i18next.t("no_duplicate"),
-    (value) => !state.feeds.some((feed) => feed.link === value)
+    (value) => !state.feedsList.includes(value)
   );
 
 export const validateInput = () => {
@@ -42,7 +42,6 @@ export const updateInputValue = (value) => {
 const fetchAndParseFeed = (url) => {
   return fetchRssData(url)
     .then((xmlString) => {
-      // console.log("Полученные данные:", xmlString);
       return parseRss(xmlString);
     })
     .catch((error) => {
@@ -50,15 +49,17 @@ const fetchAndParseFeed = (url) => {
     })
 };
 
-const addNewPosts = (items) => {
+const addNewPosts = (posts) => {
   const existingIds = new Set(state.posts.map((post) => post.id));
-  const newPosts = items
-    .filter((item) => !existingIds.has(item.id));
-  state.posts = [...state.posts, ...newPosts];
+  const newPosts = posts
+    .filter((post) => !existingIds.has(post.id))
+    .map((post) => ({ ...post, viewed: false }));
+  state.posts.unshift(...newPosts);
 };
 
 const updateFeedsAndPostsState = ({ channel, items }) => {
-  state.feeds = [...state.feeds, channel];
+  state.feeds.push(channel);
+  state.feedsList.push(state.form.inputValue);
   addNewPosts(items);
   state.form.inputValue = "";
 };
@@ -66,9 +67,8 @@ const updateFeedsAndPostsState = ({ channel, items }) => {
 export const addRssFeed = () => {
   return fetchAndParseFeed(state.form.inputValue)
     .then(({ channel, items }) => {
-      updateFeedsAndPostsState({ channel, items });
-      // return { channel, items };
-    })
+    updateFeedsAndPostsState({ channel, items });
+  })
     .catch((error) => {
       console.error("Ошибка в addRssFeed:", error.message);
       throw error;
@@ -77,7 +77,6 @@ export const addRssFeed = () => {
 
 export const feedsChecking = () => {
   if (state.feeds.length === 0) {
-    // setTimeout(feedsChecking, 10000);
     return;
   }
   checkRssFeed()
@@ -91,13 +90,15 @@ export const feedsChecking = () => {
 };
 
 export const checkRssFeed = () => {
-  const promises = state.feeds.map((feed) => {
-    return fetchAndParseFeed(feed.link)
+  const promises = state.feedsList.map((feed) => {
+    // передавать нормальную ссылку на feed
+    console.log("feed link:", feed)
+    return fetchAndParseFeed(feed)
       .then(({ items }) => {
         return items;
       })
       .catch((error) => {
-        console.error("Ошибка проверки фида:", feed.link, error.message);
+        console.error("Ошибка проверки фида:", feed, error.message);
         return [];
       });
   });
@@ -117,5 +118,8 @@ export const setActivePost = (id) => {
 };
 
 export const markPostAsRead = (id) => {
-  state.viewedPostsIds = [...state.viewedPostsIds, id];
+  const post = state.posts.find(post => post.id === id);
+  if (post && !post.viewed) {
+    post.viewed = true;
+  }
 };

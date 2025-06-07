@@ -10,29 +10,26 @@ const createState = () => {
       inputValue: "",
       errors: null,
     },
+    feedsList: [],
     feeds: [],
     posts: [],
     activeItem: null,
-    viewedPostsIds: [],
   };
 
   const state = onChange(object, (path, value) => {
     console.log(`состояние изменено: ${path}`, value);
     if (path === "feeds") {
-      renderFeeds(state.feeds);
+      renderFeeds(value);
       feedsChecking();
     }
     if (path === "posts") {
-      renderPosts(state.posts, [...state.viewedPostsIds]);
-      state.posts.forEach((post) => {
-        post.rendered = true;
-      });
+      renderPosts(value);
     }
     if (path === "activeItem") {
       if (state.activeItem !== null) {
         showModal(state.activeItem);
-        markPostAsRead(state.activeItem.id); //проверять на уникальность!
-        renderPosts(state.posts, [...state.viewedPostsIds]);
+        markPostAsRead(state.activeItem.id);
+        renderViewedPost(state.activeItem.id);
       } else {
         closeModal();
       }
@@ -49,8 +46,3 @@ const createState = () => {
 };
 
 export default createState;
-
-
-
-
-

@@ -22,7 +22,7 @@ export const renderFeeds = (feeds) => {
   `;
 };
 
-export const renderPosts = (posts, viewedPostsIds) => {
+export const renderPosts = (posts) => {
   const postsContainer = document.querySelector(".posts");
 
   postsContainer.innerHTML = `
@@ -34,7 +34,7 @@ export const renderPosts = (posts, viewedPostsIds) => {
   ${posts
     .map(
       (post) => {
-              const titleStyle = viewedPostsIds.includes(post.id) ? "fw-normal" : "fw-bold";
+              const titleStyle = post.viewed ? "fw-normal" : "fw-bold";
               return `
           <li class="list-group-item d-flex justify-content-between align-items-start border-0 border-end-0">
             <a href="${post.link}" class=${titleStyle} data-id="${post.id}" target="_blank" rel="noopener noreferrer">${post.title}</a>
@@ -47,4 +47,10 @@ export const renderPosts = (posts, viewedPostsIds) => {
     </div>
   `;
 };
+
+export const renderViewedPost = (id) => {
+  const viewedPost = document.querySelector(`[data-id="${id}"]`);
+  viewedPost.classList.remove("fw-bold");
+  viewedPost.classList.add("fw-normal");
+}
 
