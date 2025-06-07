@@ -23,13 +23,16 @@ const createState = () => {
       feedsChecking();
     }
     if (path === "posts") {
-      renderPosts(state.posts);
+      renderPosts(state.posts, [...state.viewedPostsIds]);
+      state.posts.forEach((post) => {
+        post.rendered = true;
+      });
     }
     if (path === "activeItem") {
       if (state.activeItem !== null) {
         showModal(state.activeItem);
         markPostAsRead(state.activeItem.id); //проверять на уникальность!
-        // менять стиль по button.dataset.id?
+        renderPosts(state.posts, [...state.viewedPostsIds]);
       } else {
         closeModal();
       }
