@@ -1,5 +1,5 @@
 import onChange from "on-change";
-import { renderFeeds, renderPosts } from "./renderRssFeed.js";
+import { renderFeeds, renderPosts, renderViewedPost } from "./renderRssFeed.js";
 import { closeModal, showModal } from "./renderModal.js";
 import { renderErrors, renderInputValue } from "./view.js";
 import { feedsChecking, markPostAsRead  } from "./model.js";
