@@ -10,25 +10,23 @@ const state = createState();
 
 const schema = yup
   .string()
-  .url(i18next.t("invalid_url"))
-  .required(i18next.t("required_field"))
+  .url("notUrl")
+  .required("required")
   .test(
     "no-duplicate",
-    i18next.t("no_duplicate"),
+    "exists",
     (value) => !state.feedsList.includes(value)
   );
 
 export const validateInput = () => {
   return schema
-    .validate(state.form.inputValue, { abortEarly: false })
+    .validate(state.form.inputValue)
     .then(() => {
-      state.form.errors = null;
+      state.form.error = null;
       return state.form.inputValue;
     })
     .catch((error) => {
-      if (error instanceof yup.ValidationError) {
-        state.form.errors = error.errors;
-      }
+      state.form.error = error.errors.join();
       throw error;
     });
 };
@@ -36,7 +34,7 @@ export const validateInput = () => {
 export const updateInputValue = (value) => {
   if (value === null) return;
   state.form.inputValue = value;
-  if (state.form.errors) state.form.errors = null;
+  if (state.form.error) state.form.error = null;
 };
 
 const fetchAndParseFeed = (url) => {
@@ -91,8 +89,6 @@ export const feedsChecking = () => {
 
 export const checkRssFeed = () => {
   const promises = state.feedsList.map((feed) => {
-    // передавать нормальную ссылку на feed
-    console.log("feed link:", feed)
     return fetchAndParseFeed(feed)
       .then(({ items }) => {
         return items;
@@ -123,3 +119,28 @@ export const markPostAsRead = (id) => {
     post.viewed = true;
   }
 };
+
+
+export const errorsHandler = (error, type) => {
+  switch (type) {
+    case "fetch":
+      console.error("Network error:", type, error);
+      state.ui.error = "network";
+      break;
+    case "parse":
+      console.error("Parse error:", type, error);
+      state.ui.error = "noRss";
+      break;
+    default:
+      console.error("Unknown error:", error);
+      state.ui.error = "unknown";
+      break;
+  }
+};
+
+
+
+
+
+
+

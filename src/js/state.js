@@ -8,12 +8,16 @@ const createState = () => {
   const object = {
     form: {
       inputValue: "",
-      errors: null,
+      error: null,
     },
     feedsList: [],
     feeds: [],
     posts: [],
     activeItem: null,
+    ui: {
+      error: null,
+      loading: ''
+    }
   };
 
   const state = onChange(object, (path, value) => {
@@ -37,7 +41,10 @@ const createState = () => {
     if (path === "form.inputValue") {
       renderInputValue(value);
     }
-    if (path === "form.errors") {
+    if (path === "form.error") {
+      renderErrors(value);
+    }
+    if (path === "ui.error") {
       renderErrors(value);
     }
   });
@@ -46,3 +53,4 @@ const createState = () => {
 };
 
 export default createState;
+

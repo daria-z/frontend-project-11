@@ -20,10 +20,10 @@ export const renderUIText = () => {
   example.textContent = i18next.t("example");
 };
 
-export const renderErrors = (errors) => {
-  if (errors && errors.length > 0) {
+export const renderErrors = (error) => {
+  if (error) {
     input.classList.add("is-invalid");
-    feedback.textContent = errors.join(", ");
+    feedback.textContent = i18next.t(`errors.${error}`);
   } else {
     input.classList.remove("is-invalid");
     feedback.textContent = "";
@@ -33,3 +33,4 @@ export const renderErrors = (errors) => {
 export const renderInputValue = (value) => {
   input.value = value;
 };
+
