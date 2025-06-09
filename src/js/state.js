@@ -8,7 +8,7 @@ const createState = () => {
   const object = {
     form: {
       inputValue: "",
-      error: null,
+      // error: null,
     },
     feedsList: [],
     feeds: [],
@@ -40,9 +40,6 @@ const createState = () => {
     }
     if (path === "form.inputValue") {
       renderInputValue(value);
-    }
-    if (path === "form.error") {
-      renderErrors(value);
     }
     if (path === "ui.error") {
       renderErrors(value);

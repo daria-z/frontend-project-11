@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import i18next from "../i18n.js";
+// import i18next from "../i18n.js";
 import { fetchRssData } from "./fetchRssData.js";
 import { parseRss } from "./parseRss.js";
 // import { renderRssFeed } from "./renderRssFeed.js";
@@ -22,11 +22,11 @@ export const validateInput = () => {
   return schema
     .validate(state.form.inputValue)
     .then(() => {
-      state.form.error = null;
+      state.ui.error = null;
       return state.form.inputValue;
     })
     .catch((error) => {
-      state.form.error = error.errors.join();
+      state.ui.error = error.errors.join();
       throw error;
     });
 };
@@ -34,7 +34,7 @@ export const validateInput = () => {
 export const updateInputValue = (value) => {
   if (value === null) return;
   state.form.inputValue = value;
-  if (state.form.error) state.form.error = null;
+  if (state.ui.error) state.ui.error = null;
 };
 
 const fetchAndParseFeed = (url) => {
@@ -68,7 +68,7 @@ export const addRssFeed = () => {
     updateFeedsAndPostsState({ channel, items });
   })
     .catch((error) => {
-      console.error("Ошибка в addRssFeed:", error.message);
+      // console.error("Ошибка в addRssFeed:", error.message);
       throw error;
     });
 };
@@ -137,10 +137,3 @@ export const errorsHandler = (error, type) => {
       break;
   }
 };
-
-
-
-
-
-
-

@@ -4,7 +4,9 @@ export const parseRss = (xmlString) => {
 
   const error = doc.querySelector("parsererror");
   if (error) {
-    throw new Error(`Ошибка парсинга XML: ${error.textContent}`);
+    errorsHandler(error, "parse");
+    console.error("parsing error:", error);
+    throw error;
   }
 
   const channel = {
