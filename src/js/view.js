@@ -33,4 +33,3 @@ export const renderErrors = (error) => {
 export const renderInputValue = (value) => {
   input.value = value;
 };
-

@@ -23,6 +23,18 @@ export const renderFeeds = (feeds) => {
   `;
 };
 
+export const renderFeedsPending = () => {
+  const postsContainer = document.querySelector(".feeds");
+  postsContainer.innerHTML = `
+    <div
+      id="posts-spinner"
+      class="spinner-border text-primary d-none"
+      role="status">
+        <span>Загрузка фидов...</span>
+    </div>
+  `;
+};
+
 export const renderPosts = (posts) => {
   const postsContainer = document.querySelector(".posts");
 
@@ -48,8 +60,20 @@ export const renderPosts = (posts) => {
   `;
 };
 
+export const renderPostsPending = () => {
+  const postsContainer = document.querySelector(".posts");
+  postsContainer.innerHTML = `
+    <div
+      id="posts-spinner"
+      class="spinner-border text-primary d-none"
+      role="status">
+        <span>Загрузка постов...</span>
+    </div>
+  `;
+};
+
 export const renderViewedPost = (id) => {
   const viewedPost = document.querySelector(`[data-id="${id}"]`);
   viewedPost.classList.remove("fw-bold");
   viewedPost.classList.add("fw-normal");
-}
+};

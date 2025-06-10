@@ -19,6 +19,7 @@ const schema = yup
   );
 
 export const validateInput = () => {
+  state.ui.success = false;
   return schema
     .validate(state.form.inputValue)
     .then(() => {
@@ -38,13 +39,20 @@ export const updateInputValue = (value) => {
 };
 
 const fetchAndParseFeed = (url) => {
+  state.ui.pending = true;
+  //перерендер
   return fetchRssData(url)
     .then((xmlString) => {
+      state.ui.pending = false;
+      state.ui.success = true;
+      //перерендер
       return parseRss(xmlString);
     })
     .catch((error) => {
+      state.ui.pending = false;
+      //тоже перерендер
       throw error;
-    })
+    });
 };
 
 const addNewPosts = (posts) => {

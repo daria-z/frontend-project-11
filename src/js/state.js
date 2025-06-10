@@ -16,7 +16,8 @@ const createState = () => {
     activeItem: null,
     ui: {
       error: null,
-      loading: ''
+      pending: false,
+      success: false
     }
   };
 
@@ -50,4 +51,5 @@ const createState = () => {
 };
 
 export default createState;
+
 
