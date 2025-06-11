@@ -23,18 +23,6 @@ export const renderFeeds = (feeds) => {
   `;
 };
 
-export const renderFeedsPending = () => {
-  const postsContainer = document.querySelector(".feeds");
-  postsContainer.innerHTML = `
-    <div
-      id="posts-spinner"
-      class="spinner-border text-primary d-none"
-      role="status">
-        <span>Загрузка фидов...</span>
-    </div>
-  `;
-};
-
 export const renderPosts = (posts) => {
   const postsContainer = document.querySelector(".posts");
 

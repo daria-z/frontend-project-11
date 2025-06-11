@@ -7,6 +7,10 @@ export default {
     full_btn: "Full",
     close_btn: "Close",
     example: "Example",
+    ui: {
+      success: "RSS успешно загружен",
+      pending: "Загрузка фидов...",
+    },
     errors: {
       exists: "This feed has already been added",
       required: "Required field",

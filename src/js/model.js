@@ -1,8 +1,6 @@
 import * as yup from "yup";
-// import i18next from "../i18n.js";
 import { fetchRssData } from "./fetchRssData.js";
 import { parseRss } from "./parseRss.js";
-// import { renderRssFeed } from "./renderRssFeed.js";
 
 import createState from './state.js';
 
@@ -40,17 +38,14 @@ export const updateInputValue = (value) => {
 
 const fetchAndParseFeed = (url) => {
   state.ui.pending = true;
-  //перерендер
   return fetchRssData(url)
     .then((xmlString) => {
       state.ui.pending = false;
       state.ui.success = true;
-      //перерендер
       return parseRss(xmlString);
     })
     .catch((error) => {
       state.ui.pending = false;
-      //тоже перерендер
       throw error;
     });
 };
@@ -97,6 +92,7 @@ export const feedsChecking = () => {
 
 export const checkRssFeed = () => {
   const promises = state.feedsList.map((feed) => {
+    // разделять ли это для UI ? если да, то как отслеживать разницу. Обрабатывать оба случая одинакого и поменять условия рендера?
     return fetchAndParseFeed(feed)
       .then(({ items }) => {
         return items;

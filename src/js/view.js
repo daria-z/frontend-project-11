@@ -20,13 +20,61 @@ export const renderUIText = () => {
   example.textContent = i18next.t("example");
 };
 
-export const renderErrors = (error) => {
-  if (error) {
-    input.classList.add("is-invalid");
-    feedback.textContent = i18next.t(`errors.${error}`);
-  } else {
-    input.classList.remove("is-invalid");
-    feedback.textContent = "";
+const renderErrors = (error) => {
+  input.classList.add("is-invalid");
+  feedback.classList.add("text-danger");
+  feedback.textContent = i18next.t(`errors.${error}`);
+};
+
+const renderSuccess = () => {
+  feedback.classList.add("text-success");
+  feedback.textContent = i18next.t(`ui.success`);
+};
+
+const renderFeedsPending = () => {
+  const postsContainer = document.querySelector(".feeds");
+  const spinner = document.createElement('div');
+  spinner.classList.add('spinner-container')
+  spinner.innerHTML = `
+    <div
+      id="posts-spinner"
+      class="spinner-border text-primary d-none"
+      role="status">
+        <span>${i18next.t("ui.pending")}</span>
+    </div>
+  `;
+  postsContainer.append(spinner);
+};
+
+const cleanDomElements = () => {
+  input.classList.remove("is-invalid");
+  feedback.classList.remove("text-danger");
+  feedback.classList.remove("text-success");
+  feedback.textContent = "";
+  const spinner = document.querySelector(".spinner-container");
+  if (spinner) spinner.remove();
+}
+
+export const renderUi = (uiState, message) => {
+  switch (uiState) {
+    case 'error':
+      cleanDomElements();
+      renderErrors(message);
+      break;
+    case 'success':
+      cleanDomElements();
+      renderSuccess();
+      break;
+    case 'pending':
+      cleanDomElements();
+      renderFeedsPending();
+      break;
+    case 'update':
+      // нужен ли отдельный case?
+      break;
+    default:
+      cleanDomElements();
+      break;
   }
 };
 

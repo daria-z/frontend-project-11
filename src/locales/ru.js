@@ -7,10 +7,7 @@ export default {
     full_btn: "Читать полностью",
     close_btn: "Закрыть",
     example: "Пример",
-    invalid_url: "Ссылка должна быть валидным URL",
-    required_field: "Обязательное поле",
-    no_duplicate: "Эта лента уже добавлена",
-    loading: {
+    ui: {
       success: "RSS успешно загружен",
     },
     errors: {
