@@ -9,6 +9,7 @@ export default {
     example: "Пример",
     ui: {
       success: "RSS успешно загружен",
+      pending: "Загрузка фидов...",
     },
     errors: {
       exists: "RSS уже существует",

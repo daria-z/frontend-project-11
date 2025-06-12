@@ -8,20 +8,19 @@ export default {
     close_btn: "Close",
     example: "Example",
     ui: {
-      success: "RSS успешно загружен",
-      pending: "Загрузка фидов...",
+      success: "RSS successfully loaded",
+      pending: "Loading feeds...",
     },
     errors: {
       exists: "This feed has already been added",
       required: "Required field",
       notUrl: "Link must be a valid URL",
-      noRss: "Ресурс не содержит валидный RSS",
-      network: "Ошибка сети",
-      unknown: "Неизвестная ошибка. Что-то пошло не так.",
+      noRss: "The resource does not contain a valid RSS",
+      network: "Network error",
+      unknown: "Unknown error. Something went wrong.",
     },
     feeds: "Feeds",
     posts: "Posts",
     preview: "Preview",
   },
 };
-
