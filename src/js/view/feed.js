@@ -15,7 +15,7 @@ export const renderFeeds = (feeds) => {
             <h3 class="h6 m-0">${feed.title}</h3>
             <p class="m-0 small text-black-50">${feed.description}</p>
           </li>
-        `
+        `,
           )
           .join("")}
       </ul>

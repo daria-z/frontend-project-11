@@ -15,8 +15,8 @@ const createState = () => {
     ui: {
       error: null,
       pending: false,
-      success: false
-    }
+      success: false,
+    },
   };
 
   return onChange(object, (path, value) => {
@@ -41,7 +41,7 @@ const createState = () => {
       view.form.renderInputValue(value);
     }
     if (path === "ui.error") {
-      view.ui.renderUi('error', value);
+      view.ui.renderUi("error", value);
     }
     if (path === "ui.success") {
       view.ui.renderUi("success");

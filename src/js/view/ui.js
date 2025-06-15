@@ -1,6 +1,6 @@
 import i18next from "../../i18n.js";
-import { renderErrors, renderSuccess } from "./renderForm.js";
-import { renderFeedsPending } from "./renderFeeds.js";
+import { renderErrors, renderSuccess } from "./form.js";
+import { renderFeedsPending } from "./feed.js";
 const title = document.querySelector("#main-title");
 const subtitle = document.querySelector("#subtitle");
 const input = document.querySelector("#url-input");

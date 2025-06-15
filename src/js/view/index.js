@@ -1,9 +1,13 @@
-import * as ui from "./renderUi.js";
-import * as form from "./renderForm.js";
-import * as feeds from "./renderFeeds.js";
-import * as posts from "./renderPosts.js";
-import * as modal from "./renderModal.js";
+import * as ui from "./ui.js";
+import * as form from "./form.js";
+import * as feeds from "./feed.js";
+import * as posts from "./post.js";
+import * as modal from "./modal.js";
 
 export const view = {
-  ui, feeds, form, posts, modal
+  ui,
+  feeds,
+  form,
+  posts,
+  modal,
 };

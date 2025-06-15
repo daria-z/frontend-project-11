@@ -6,11 +6,7 @@ const schema = yup
   .string()
   .url("notUrl")
   .required("required")
-  .test(
-    "no-duplicate",
-    "exists",
-    (value) => !state.feedsList.includes(value)
-  );
+  .test("no-duplicate", "exists", (value) => !state.feedsList.includes(value));
 
 export const validateInput = () => {
   state.ui.success = false;

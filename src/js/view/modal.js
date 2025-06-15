@@ -29,4 +29,3 @@ export const closeModal = () => {
 
   document.querySelector(".modal-backdrop").remove();
 };
-

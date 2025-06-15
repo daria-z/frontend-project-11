@@ -16,7 +16,8 @@ export const initApp = () => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    model.form.validateInput()
+    model.form
+      .validateInput()
       .then(() => model.feed.add())
       .catch((error) => {
         console.log("валидация не пройдена:", error.message);
@@ -31,7 +32,7 @@ export const initApp = () => {
   });
 
   closeModalBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener("click", () => {
       model.post.setActive(null);
     });
   });

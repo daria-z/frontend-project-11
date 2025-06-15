@@ -41,4 +41,3 @@ export const renderViewedPost = (id) => {
   viewedPost.classList.remove("fw-bold");
   viewedPost.classList.add("fw-normal");
 };
-

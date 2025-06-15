@@ -33,4 +33,3 @@ export const startFeedChecks = () => {
       setTimeout(startFeedChecks, 10000);
     });
 };
-

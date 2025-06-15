@@ -16,4 +16,3 @@ export const renderSuccess = () => {
   feedback.classList.add("text-success");
   feedback.textContent = i18next.t(`ui.success`);
 };
-
