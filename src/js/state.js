@@ -1,6 +1,6 @@
 import onChange from "on-change";
 import { view } from "./view/index.js";
-import { feedsChecking, markPostAsRead  } from "./model.js";
+import { model } from "./model/index.js";
 
 const createState = () => {
   const object = {
@@ -19,11 +19,11 @@ const createState = () => {
     }
   };
 
-  const state = onChange(object, (path, value) => {
+  return onChange(object, (path, value) => {
     console.log(`состояние изменено: ${path}`, value);
     if (path === "feeds") {
       view.feeds.renderFeeds(value);
-      feedsChecking();
+      model.update.checkFeeds();
     }
     if (path === "posts") {
       view.posts.renderPosts(value);
@@ -31,7 +31,7 @@ const createState = () => {
     if (path === "activeItem") {
       if (state.activeItem !== null) {
         view.modal.showModal(state.activeItem);
-        markPostAsRead(state.activeItem.id);
+        model.post.markAsRead(state.activeItem.id);
         view.posts.renderViewedPost(state.activeItem.id);
       } else {
         view.modal.closeModal();
@@ -50,8 +50,8 @@ const createState = () => {
       view.ui.renderUi("pending");
     }
   });
-
-  return state;
 };
 
-export default createState;
+const state = createState();
+
+export default state;

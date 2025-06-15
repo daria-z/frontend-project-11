@@ -1,11 +1,11 @@
-import { errorsHandler } from "./model.js";
+import { model } from "./model/index.js";
 export const parseRss = (xmlString) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xmlString, "text/xml");
 
   const error = doc.querySelector("parsererror");
   if (error) {
-    errorsHandler(error, "parse");
+    model.error.handle(error, "parse");
     console.error("parsing error:", error);
     throw error;
   }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { errorsHandler } from "./model.js";
+import { model } from "./model/index.js";
 
 export const fetchRssData = (link) => {
   const proxyUrl = `https://allorigins.hexlet.app/raw?url=${encodeURIComponent(link)}&disableCache=true`;
@@ -10,9 +10,7 @@ export const fetchRssData = (link) => {
       return response.data;
     })
     .catch((error) => {
-      errorsHandler(error, "fetch");
-      console.error("fetching or parsing error:", error);
+      model.error.handle(error, "fetch");
       throw error;
     });
 };
-

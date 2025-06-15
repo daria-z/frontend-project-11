@@ -1,15 +1,9 @@
 import { view } from "./view/index.js";
-import {
-  updateInputValue,
-  addRssFeed,
-  validateInput,
-  setActivePost,
-  feedsChecking,
-} from "./model.js";
+import { model } from "./model/index.js";
 
 export const initApp = () => {
   view.ui.renderUIText();
-  feedsChecking();
+  model.update.startFeedChecks();
 
   const input = document.querySelector("#url-input");
   const form = document.querySelector("#rss-form");
@@ -17,13 +11,13 @@ export const initApp = () => {
   const closeModalBtns = document.querySelectorAll('[data-bs-dismiss="modal"]');
 
   input.addEventListener("input", (e) => {
-    updateInputValue(e.target.value);
+    model.form.updateInputValue(e.target.value);
   });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    validateInput()
-      .then(() => addRssFeed())
+    model.form.validateInput()
+      .then(() => model.feed.add())
       .catch((error) => {
         console.log("валидация не пройдена:", error.message);
       });
@@ -32,13 +26,13 @@ export const initApp = () => {
   postsContainer.addEventListener("click", (e) => {
     const button = e.target.closest(".modal-btn");
     if (button && button.dataset.id) {
-      setActivePost(button.dataset.id);
+      model.post.setActive(button.dataset.id);
     }
   });
 
   closeModalBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      setActivePost(null);
+      model.post.setActive(null);
     });
   });
 };
