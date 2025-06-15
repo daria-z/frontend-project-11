@@ -1,4 +1,4 @@
-import { renderUIText } from "./view.js";
+import { view } from "./view/index.js";
 import {
   updateInputValue,
   addRssFeed,
@@ -8,7 +8,7 @@ import {
 } from "./model.js";
 
 export const initApp = () => {
-  renderUIText();
+  view.ui.renderUIText();
   feedsChecking();
 
   const input = document.querySelector("#url-input");

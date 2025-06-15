@@ -1,4 +1,4 @@
-import i18next from "../i18n.js";
+import i18next from "../../i18n.js";
 import { renderErrors, renderSuccess } from "./renderForm.js";
 import { renderFeedsPending } from "./renderFeeds.js";
 const title = document.querySelector("#main-title");

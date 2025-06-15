@@ -1,4 +1,4 @@
-import i18next from "../i18n.js";
+import i18next from "../../i18n.js";
 const input = document.querySelector("#url-input");
 const feedback = document.querySelector("#feedback");
 

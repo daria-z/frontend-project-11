@@ -1,7 +1,5 @@
 import onChange from "on-change";
-import { renderFeeds, renderPosts, renderViewedPost } from "./renderRssFeed.js";
-import { closeModal, showModal } from "./renderModal.js";
-import { renderInputValue, renderUi } from "./view.js";
+import { view } from "./view/index.js";
 import { feedsChecking, markPostAsRead  } from "./model.js";
 
 const createState = () => {
@@ -24,32 +22,32 @@ const createState = () => {
   const state = onChange(object, (path, value) => {
     console.log(`состояние изменено: ${path}`, value);
     if (path === "feeds") {
-      renderFeeds(value);
+      view.feeds.renderFeeds(value);
       feedsChecking();
     }
     if (path === "posts") {
-      renderPosts(value);
+      view.posts.renderPosts(value);
     }
     if (path === "activeItem") {
       if (state.activeItem !== null) {
-        showModal(state.activeItem);
+        view.modal.showModal(state.activeItem);
         markPostAsRead(state.activeItem.id);
-        renderViewedPost(state.activeItem.id);
+        view.posts.renderViewedPost(state.activeItem.id);
       } else {
-        closeModal();
+        view.modal.closeModal();
       }
     }
     if (path === "form.inputValue") {
-      renderInputValue(value);
+      view.form.renderInputValue(value);
     }
     if (path === "ui.error") {
-      renderUi('error', value);
+      view.ui.renderUi('error', value);
     }
     if (path === "ui.success") {
-      renderUi("success");
+      view.ui.renderUi("success");
     }
     if (path === "ui.pending") {
-      renderUi("pending");
+      view.ui.renderUi("pending");
     }
   });
 
@@ -57,5 +55,3 @@ const createState = () => {
 };
 
 export default createState;
-
-

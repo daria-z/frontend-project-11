@@ -1,3 +1,4 @@
+import { errorsHandler } from "./model.js";
 export const parseRss = (xmlString) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xmlString, "text/xml");

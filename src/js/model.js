@@ -68,10 +68,11 @@ const updateFeedsAndPostsState = ({ channel, items }) => {
 export const addRssFeed = () => {
   return fetchAndParseFeed(state.form.inputValue)
     .then(({ channel, items }) => {
-    updateFeedsAndPostsState({ channel, items });
+      updateFeedsAndPostsState({ channel, items });
+      state.ui.error = null;
   })
     .catch((error) => {
-      // console.error("Ошибка в addRssFeed:", error.message);
+      errorsHandler(error, error.message === "noRss" ? "parse" : "fetch");
       throw error;
     });
 };
