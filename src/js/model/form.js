@@ -9,14 +9,16 @@ const schema = yup
   .test("no-duplicate", "exists", (value) => !state.feedsList.includes(value));
 
 export const validateInput = () => {
-  state.ui.success = false;
+  // state.ui.success = false;
   return schema
-    .validate(state.form.inputValue)
-    .then(() => {
-      state.ui.error = null;
+  .validate(state.form.inputValue)
+  .then(() => {
+    state.ui.status = "success";
+    state.ui.error = null;
       return state.form.inputValue;
     })
     .catch((error) => {
+      state.ui.status = "error";
       state.ui.error = error.errors.join();
       throw error;
     });

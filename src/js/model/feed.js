@@ -6,16 +6,17 @@ import { addNew } from "./post.js";
 import { handle } from "./error.js";
 
 export const fetchAndParse = (url) => {
-  state.ui.pending = true;
+  // state.ui.pending = true;
+  state.ui.status = 'pending';
   // state.ui.error = null;
   return fetchRssData(url)
     .then((xmlString) => {
-      state.ui.pending = false;
-      state.ui.success = true;
+      // state.ui.pending = false;
+      state.ui.status = 'success';
       return parseRss(xmlString);
     })
     .catch((error) => {
-      state.ui.pending = false;
+      // state.ui.pending = false;
       handle(error, error.message === "noRss" ? "parse" : "fetch");
       throw error;
     });

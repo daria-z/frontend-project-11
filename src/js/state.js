@@ -13,41 +13,41 @@ const createState = () => {
     posts: [],
     activeItem: null,
     ui: {
+      status: null, // 'error', 'success', 'pending'
       error: null,
-      pending: false,
-      success: false,
     },
   };
 
   return onChange(object, (path, value) => {
     console.log(`состояние изменено: ${path}`, value);
-    if (path === "feeds") {
-      view.feeds.renderFeeds(value);
-      model.update.checkFeeds();
-    }
-    if (path === "posts") {
-      view.posts.renderPosts(value);
-    }
-    if (path === "activeItem") {
-      if (state.activeItem !== null) {
-        view.modal.showModal(state.activeItem);
-        model.post.markAsRead(state.activeItem.id);
-        view.posts.renderViewedPost(state.activeItem.id);
-      } else {
-        view.modal.closeModal();
-      }
-    }
-    if (path === "form.inputValue") {
-      view.form.renderInputValue(value);
-    }
-    if (path === "ui.error") {
-      view.ui.renderUi("error", value);
-    }
-    if (path === "ui.success") {
-      view.ui.renderUi("success");
-    }
-    if (path === "ui.pending") {
-      view.ui.renderUi("pending");
+    switch (path) {
+      case "feeds":
+        view.feeds.renderFeeds(value);
+        model.update.checkFeeds();
+        break;
+      case "posts":
+        view.posts.renderPosts(value);
+        break;
+      case "activeItem":
+        if (state.activeItem !== null) {
+          view.modal.showModal(state.activeItem);
+          model.post.markAsRead(state.activeItem.id);
+          view.posts.renderViewedPost(state.activeItem.id);
+        } else {
+          view.modal.closeModal();
+        }
+        break;
+      case "form.inputValue":
+        view.form.renderInputValue(value);
+        break;
+      case "ui.status":
+        view.ui.renderUi(value, state.ui.error);
+        break;
+      case "ui.error":
+        if (state.ui.status === "error") {
+          view.ui.renderUi("error", value);
+        }
+        break;
     }
   });
 };
