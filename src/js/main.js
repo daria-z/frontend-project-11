@@ -22,6 +22,7 @@ export const initApp = () => {
       .catch((error) => {
         console.log("валидация не пройдена:", error.message);
       });
+    e.target.reset();
   });
 
   postsContainer.addEventListener("click", (e) => {
