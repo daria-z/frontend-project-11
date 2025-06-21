@@ -2,8 +2,7 @@ import axios from "axios";
 import { model } from "./model/index.js";
 
 export const fetchRssData = (link) => {
-  const proxyUrl = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
-  // console.log(proxyUrl.searchParams.get('url'));
+  const proxyUrl = `https://allorigins.hexlet.app/raw?disableCache=true&url=${encodeURIComponent(link)}`;
   return axios
     .get(proxyUrl)
     .then((response) => {
