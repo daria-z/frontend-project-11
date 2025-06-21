@@ -11,12 +11,9 @@ build:
 	NODE_ENV=production npm run build
 
 test:
-	echo no tests
-
-playwright:
 	npx playwright test
 
-playwright-result:
+test-report:
 	npx playwright show-report
 
 qlty-check:
