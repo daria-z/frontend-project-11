@@ -1,6 +1,6 @@
 export default {
   translation: {
-    title: "RSS aggregator",
+    title: "RSS agregator",
     subtitle: "Start reading RSS today! It's easy, it's beautiful.",
     form_placeholder: "RSS Link",
     add_btn: "Add",

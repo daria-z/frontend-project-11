@@ -9,6 +9,7 @@ export const initApp = () => {
   const form = document.querySelector("#rss-form");
   const postsContainer = document.querySelector(".posts");
   const closeModalBtns = document.querySelectorAll('[data-bs-dismiss="modal"]');
+  const langSwitcher = document.querySelector("#languageSelectFooter");
 
   input.addEventListener("input", (e) => {
     model.form.updateInputValue(e.target.value);
@@ -37,4 +38,8 @@ export const initApp = () => {
       model.post.setActive(null);
     });
   });
+
+  langSwitcher.addEventListener('change', (e) => {
+    model.lng.handle(e.target.value);
+  })
 };
