@@ -3,16 +3,19 @@ import state from "../state.js";
 export const handle = (error, type) => {
   switch (type) {
     case "fetch":
-      console.error("Network error:", type, error);
+      state.ui.status = "error";
       state.ui.error = "network";
+      console.error("Network error:", type, error);
       break;
     case "parse":
-      console.error("Parse error:", type, error);
+      state.ui.status = "error";
       state.ui.error = "noRss";
+      console.error("Parse error:", type, error);
       break;
     default:
-      console.error("Unknown error:", error);
+      state.ui.status = "error";
       state.ui.error = "no_details";
+      console.error("Unknown error:", error);
       break;
   }
 };

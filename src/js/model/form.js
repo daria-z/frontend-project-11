@@ -9,7 +9,6 @@ const schema = yup
   .test("no-duplicate", "exists", (value) => !state.feedsList.includes(value));
 
 export const validateInput = () => {
-  // state.ui.success = false;
   return schema
   .validate(state.form.inputValue)
   .then(() => {

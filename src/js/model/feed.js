@@ -6,17 +6,13 @@ import { addNew } from "./post.js";
 import { handle } from "./error.js";
 
 export const fetchAndParse = (url) => {
-  // state.ui.pending = true;
   state.ui.status = 'pending';
-  // state.ui.error = null;
   return fetchRssData(url)
     .then((xmlString) => {
-      // state.ui.pending = false;
       state.ui.status = 'success';
       return parseRss(xmlString);
     })
     .catch((error) => {
-      // state.ui.pending = false;
       handle(error, error.message === "noRss" ? "parse" : "fetch");
       throw error;
     });
@@ -27,7 +23,6 @@ export const updateState = ({ channel, items }) => {
   state.feedsList.push(state.form.inputValue);
   addNew(items);
   state.form.inputValue = "";
-  // state.ui.error = null;
 };
 
 export const add = () => {
@@ -35,7 +30,6 @@ export const add = () => {
   return fetchAndParse(url)
     .then(({ channel, items }) => {
       updateState({ channel, items });
-      // state.ui.error = null;
     })
     .catch((error) => {
       handle(error, error.message === "noRss" ? "parse" : "fetch");
