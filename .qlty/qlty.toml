@@ -71,21 +71,12 @@ name = "actionlint"
 name = "checkov"
 
 [[plugin]]
-name = "eslint"
-version = "9.26.0"
-package_file = "package.json"
-package_filters = ["eslint"]
-
-[[plugin]]
 name = "markdownlint"
 mode = "comment"
 config = { "MD013" = false }
 
 [[plugin]]
 name = "osv-scanner"
-
-[[plugin]]
-name = "prettier"
 
 [[plugin]]
 name = "ripgrep"

@@ -1,12 +1,12 @@
-import i18next from "i18next";
-import translations from "./locales/index.js";
+import i18next from 'i18next'
+import translations from './locales/index.js'
 
-const i18nextInstance = i18next.createInstance();
+const i18nextInstance = i18next.createInstance()
 i18nextInstance.init({
-  lng: "ru",
+  lng: 'ru',
   resources: translations,
-  fallbackLng: "ru",
-  supportedLngs: ["en", "ru"],
-});
+  fallbackLng: 'ru',
+  supportedLngs: ['en', 'ru'],
+})
 
-export default i18nextInstance;
+export default i18nextInstance

@@ -1,29 +1,26 @@
-import js from "@eslint/js";
-import globals from "globals";
-import { defineConfig } from "eslint/config";
+import js from '@eslint/js'
+import globals from 'globals'
+import { defineConfig } from 'eslint/config'
+import { includeIgnoreFile } from '@eslint/compat'
+import stylistic from '@stylistic/eslint-plugin'
+import { fileURLToPath } from 'url'
+
+const gitIgnorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
+const eslintIgnorePath = fileURLToPath(
+  new URL('.eslintignore', import.meta.url),
+)
 
 export default defineConfig([
+  includeIgnoreFile(gitIgnorePath),
+  includeIgnoreFile(eslintIgnorePath),
+  stylistic.configs.recommended,
   {
-    ignores: ["node_modules/**", "dist/**", "src/dist/**", "__fixtures__/**"],
-  },
-  {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ['**/*.{js,mjs,cjs}'],
     plugins: { js },
-    languageOptions: {
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-      },
-    },
-    extends: ["js/recommended"],
+    extends: ['js/recommended'],
   },
   {
-    files: ["vite.config.js"],
-    languageOptions: {
-      sourceType: "module",
-      globals: {
-        __dirname: "readonly",
-      },
-    },
+    files: ['**/*.{js,mjs,cjs}'],
+    languageOptions: { globals: globals.browser },
   },
-]);
+])

@@ -1,4 +1,4 @@
-import "../i18n.js";
-import { initApp } from "./main.js";
+import '../i18n.js'
+import { initApp } from './main.js'
 
-initApp();
+initApp()

@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
 // import path from "path";
 
 export default defineConfig({
@@ -11,4 +11,4 @@ export default defineConfig({
     port: 8080,
     hot: true,
   },
-});
+})

@@ -1,5 +1,5 @@
-import state from "../state.js";
+import state from '../state.js'
 
 export const handle = (value) => {
-  state.ui.lng = value;
-};
+  state.ui.lng = value
+}
