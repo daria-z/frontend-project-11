@@ -1,17 +1,18 @@
 import state from "../state.js";
 import { fetchAndParse } from "./feed.js";
 import { addNew } from "./post.js";
+import { handle } from "./error.js";
 
 export const checkFeeds = () => {
   const promises = state.feedsList.map((feed) => {
-    state.ui.status = 'pending';
+    state.ui.status = "pending";
     return fetchAndParse(feed)
       .then(({ items }) => {
         return items;
       })
       .catch((error) => {
         state.ui.status = "error";
-        model.error.handle(error, "fetch");
+        handle(error, "fetch");
         return [];
       });
   });

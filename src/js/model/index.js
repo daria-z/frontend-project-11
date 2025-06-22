@@ -11,5 +11,5 @@ export const model = {
   post,
   update,
   error,
-  lng
+  lng,
 };

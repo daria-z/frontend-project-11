@@ -10,9 +10,9 @@ const schema = yup
 
 export const validateInput = () => {
   return schema
-  .validate(state.form.inputValue)
-  .then(() => {
-    state.ui.status = "success";
+    .validate(state.form.inputValue)
+    .then(() => {
+      state.ui.status = "success";
       return state.form.inputValue;
     })
     .catch((error) => {

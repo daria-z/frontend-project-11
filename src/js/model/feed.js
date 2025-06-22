@@ -6,10 +6,10 @@ import { addNew } from "./post.js";
 import { handle } from "./error.js";
 
 export const fetchAndParse = (url) => {
-  state.ui.status = 'pending';
+  state.ui.status = "pending";
   return fetchRssData(url)
     .then((xmlString) => {
-      state.ui.status = 'success';
+      state.ui.status = "success";
       return parseRss(xmlString);
     })
     .catch((error) => {

@@ -39,7 +39,7 @@ export const initApp = () => {
     });
   });
 
-  langSwitcher.addEventListener('change', (e) => {
+  langSwitcher.addEventListener("change", (e) => {
     model.lng.handle(e.target.value);
-  })
+  });
 };
