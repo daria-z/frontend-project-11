@@ -13,7 +13,7 @@ export const fetchAndParse = (url) => {
       return parseRss(xmlString);
     })
     .catch((error) => {
-      handle(error, error.message === "noRss" ? "parse" : "fetch");
+      //посмотреть нужно ли тут и как обрабатывать ошибки
       throw error;
     });
 };
@@ -32,7 +32,8 @@ export const add = () => {
       updateState({ channel, items });
     })
     .catch((error) => {
-      handle(error, error.message === "noRss" ? "parse" : "fetch");
+      //и тут корректное ли это решение
+      handle(error, state.ui.error === "noRss" ? "parse" : "fetch");
       throw error;
     });
 };

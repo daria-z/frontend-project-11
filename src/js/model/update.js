@@ -5,7 +5,6 @@ import { addNew } from "./post.js";
 export const checkFeeds = () => {
   const promises = state.feedsList.map((feed) => {
     state.ui.status = 'pending';
-    state.ui.error = null;
     return fetchAndParse(feed)
       .then(({ items }) => {
         return items;

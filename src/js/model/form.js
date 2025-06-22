@@ -13,7 +13,6 @@ export const validateInput = () => {
   .validate(state.form.inputValue)
   .then(() => {
     state.ui.status = "success";
-    state.ui.error = null;
       return state.form.inputValue;
     })
     .catch((error) => {
@@ -26,5 +25,4 @@ export const validateInput = () => {
 export const updateInputValue = (value) => {
   if (value === null) return;
   state.form.inputValue = value;
-  if (state.ui.error) state.ui.error = null;
 };

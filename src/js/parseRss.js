@@ -6,7 +6,6 @@ export const parseRss = (xmlString) => {
   const error = doc.querySelector("parsererror");
   if (error) {
     model.error.handle(error, "parse");
-    console.error("parsing error:", error);
     throw error;
   }
 
