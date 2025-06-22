@@ -1,4 +1,5 @@
 import onChange from "on-change";
+import i18next from "../i18n.js";
 import { view } from "./view/index.js";
 import { model } from "./model/index.js";
 
@@ -13,6 +14,7 @@ const createState = () => {
     posts: [],
     activeItem: null,
     ui: {
+      lng: "ru",
       status: null, // 'error', 'success', 'pending'
       error: null,
     },
@@ -47,6 +49,10 @@ const createState = () => {
         if (state.ui.status === "error") {
           view.ui.renderUi("error", value);
         }
+        break;
+      case "ui.lng":
+        i18next.changeLanguage(state.ui.lng);
+        view.ui.renderUIText();
         break;
     }
   });
