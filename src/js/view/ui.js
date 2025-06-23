@@ -1,5 +1,5 @@
 import i18next from '../../i18n.js'
-import { renderErrors, renderSuccess } from './form.js'
+import { renderErrors, renderSuccess, disableForm } from './form.js'
 import { renderFeedsPending } from './feed.js'
 const title = document.querySelector('#main-title')
 const subtitle = document.querySelector('#subtitle')
@@ -39,10 +39,14 @@ export const renderUi = (uiState, message) => {
       break
     case 'success':
       cleanDomElements()
+      disableForm(false)
       renderSuccess()
       break
     case 'pending':
+      // изменять ли содержимое поля в этот момент?
+      // писать сообщение или только блокировать?
       cleanDomElements()
+      disableForm(true)
       renderFeedsPending()
       break
     case 'update':
