@@ -115,45 +115,58 @@ test('handling network error', async ({ page }) => {
 
   await expect(page.locator('text=Ошибка сети', {})).toBeVisible()
 })
-// test.describe('handle disabling ui elements during loading', () => {
-//   test('handle successful loading', async ({ page }) => {
-//     responseHandler(rssUrl, rss1);
 
-//     // expect(await page.waitForSelector('input[name="url"][disabled=true]')).toBeVisible();
-//     expect(await page.locator('input[name="url"]')).toBeEditable();
-//     expect(await page.locator('button[type="submit"]')).toBeEnabled();
+test.describe('handle disabling ui elements during loading', () => {
+  test('handle successful loading', async ({ page }) => {
+    await page.route('https://allorigins.hexlet.app/**', async (route) => {
+      await new Promise(resolve => setTimeout(resolve, 500))
 
-//     await page.locator('input[name="url"]').type(rssUrl);
-//     await page.locator('button[type="submit"]').click();
+      return route.fulfill({
+        status: 200,
+        contentType: 'text/xml',
+        body: JSON.stringify({ contents: rss1 }),
+      })
+    })
 
-//     expect(await page.waitForSelector('input[name="url"]', { state: 'disabled' })).toBeTruthy();
-//     expect(await page.locator('input[name="url"][readonly=true]',
-//      { timeout: 1000 })).toBeVisible();
-//     expect(page.locator('button[type="submit"]')).toBeDisabled();
+    await page.locator('input[aria-label="url"]').type(rssUrl)
+    const submitPromise = page.locator('button[type="submit"]').click()
 
-//     expect(await page.locator('input[name="url"]')).toBeEditable();
+    await expect(page.locator('input[aria-label="url"]')).not.toBeEditable()
+    await expect(page.locator('button[type="submit"]')).toBeDisabled()
 
-//     expect(await page.locator('button[type="submit"]')).toBeEnabled();
-//   });
+    await submitPromise
+    await expect(page.locator('text=RSS успешно загружен')).toBeVisible()
 
-//   test('handle failed loading', async ({ page }) => {
-//     responseHandler(htmlUrl, html);
+    await expect(page.locator('input[aria-label="url"]')).toBeEditable()
+    await expect(page.locator('button[type="submit"]')).toBeEnabled()
+  })
 
-//     expect(await page.locator('input[name="url"]')).toBeEditable();
-//     expect(await page.locator('button[type="submit"]')).toBeEnabled();
+  test('handle failed loading', async ({ page }) => {
+    await page.route('https://allorigins.hexlet.app/**', async (route) => {
+      await new Promise(resolve => setTimeout(resolve, 500))
 
-//     await page.locator('input[name="url"]').type(htmlUrl);
-//     await page.locator('button[type="submit"]').click();
+      return route.fulfill({
+        status: 200,
+        contentType: 'text/html',
+        body: JSON.stringify({ contents: html }),
+      })
+    })
 
-//     expect(await page.locator('input[name="url"]')).not.toBeEditable();
+    await page.locator('input[aria-label="url"]').type(htmlUrl)
+    const submitPromise = page.locator('button[type="submit"]').click()
 
-//     expect(await page.locator('button[type="submit"]')).toBeDisabled();
+    await expect(page.locator('input[aria-label="url"]')).not.toBeEditable()
+    await expect(page.locator('button[type="submit"]')).toBeDisabled()
 
-//     expect(await page.locator('input[name="url"]')).toBeEditable();
+    await submitPromise
+    await expect(
+      page.locator('text=Ресурс не содержит валидный RSS'),
+    ).toBeVisible()
 
-//     expect(await page.locator('button[type="submit"]')).toBeEnabled();
-//   });
-// });
+    await expect(page.locator('input[aria-label="url"]')).toBeEditable()
+    await expect(page.locator('button[type="submit"]')).toBeEnabled()
+  })
+})
 
 test.describe('load feeds', () => {
   test('render feed and posts', async ({ page }) => {
