@@ -25,15 +25,14 @@ export const updateState = ({ channel, items }) => {
   state.form.inputValue = ''
 }
 
-export const add = () => {
+export const add = async () => {
   const url = state.form.inputValue
-  return fetchAndParse(url)
-    .then(({ channel, items }) => {
-      updateState({ channel, items })
-    })
-    .catch((error) => {
-      // и тут корректное ли это решение
-      handle(error, state.ui.error === 'noRss' ? 'parse' : 'fetch')
-      throw error
-    })
+  try {
+    const { channel, items } = await fetchAndParse(url)
+    updateState({ channel, items })
+  }
+  catch (error) {
+    handle(error, state.ui.error === 'noRss' ? 'parse' : 'fetch')
+    throw error
+  }
 }

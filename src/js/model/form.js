@@ -8,18 +8,17 @@ const schema = yup
   .required('required')
   .test('no-duplicate', 'exists', value => !state.feedsList.includes(value))
 
-export const validateInput = () => {
-  return schema
-    .validate(state.form.inputValue)
-    .then(() => {
-      state.ui.status = 'success'
-      return state.form.inputValue
-    })
-    .catch((error) => {
-      state.ui.status = 'error'
-      state.ui.error = error.errors.join()
-      throw error
-    })
+export const validateInput = async () => {
+  try {
+    await schema.validate(state.form.inputValue)
+    state.ui.status = 'success'
+    return state.form.inputValue
+  }
+  catch (error) {
+    state.ui.status = 'error'
+    state.ui.error = error.errors.join()
+    throw error
+  }
 }
 
 export const updateInputValue = (value) => {
